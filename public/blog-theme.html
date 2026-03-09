@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Komunitas Mutiara — Blog by Rafi</title>
+  <meta name="description" content="Blog tentang teknologi, pemrograman, doa-doa islami, dan cerita perjalanan dari Garut ke Bandung oleh Rafi.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7fafa;
+      --fg: #0f1f2a;
+      --card: #ffffff;
+      --muted: #6b7f8e;
+      --border: #dce8e8;
+      --primary: #0d7a5f;
+      --primary-light: #e6f5f0;
+      --primary-dark: #095c47;
+      --accent: #d4952b;
+      --accent-light: #fff4e0;
+      --gradient: linear-gradient(135deg, #0d7a5f, #1a8fb5);
+      --gradient-warm: linear-gradient(135deg, #d4952b, #c55a3a);
+      --shadow: 0 4px 24px -4px rgba(13,122,95,0.12);
+      --shadow-lg: 0 12px 40px -8px rgba(13,122,95,0.18);
+      --radius: 16px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: var(--gradient);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 0;
+    }
+    .header-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .header-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .header-subtitle {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    /* ===== NAV ===== */
+    .nav {
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .nav ul {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+      padding: 8px 0;
+      overflow-x: auto;
+    }
+    .nav a {
+      display: block;
+      padding: 8px 18px;
+      border-radius: 10px;
+      color: rgba(255,255,255,0.78);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .nav a:hover, .nav a.active {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      padding: 70px 0 60px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      right: -60px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(13,122,95,0.06);
+      filter: blur(80px);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -40px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(212,149,43,0.06);
+      filter: blur(80px);
+    }
+    .hero-bismillah {
+      font-family: 'Amiri', serif;
+      font-size: 20px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero h1 .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .hero p em {
+      color: var(--fg);
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    /* ===== FEATURES ===== */
+    .features {
+      padding: 70px 0;
+      background: var(--card);
+    }
+    .features-heading {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .features-heading h2 {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .features-heading p {
+      color: var(--muted);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      padding: 32px 28px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
+    .feature-icon.tech {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    .feature-icon.islam {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* ===== SOCIAL ===== */
+    .social {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 40px 0;
+    }
+    .social a {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 16px;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+    .social a:hover { transform: scale(1.12); }
+    .social .fb { background: #3b5998; }
+    .social .tw { background: #1da1f2; }
+    .social .yt { background: #ff0000; }
+    .social .ig { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+
+    /* ===== CTA ===== */
+    .cta {
+      padding: 70px 0;
+    }
+    .cta-box {
+      background: var(--gradient);
+      border-radius: 24px;
+      padding: 50px 40px;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .cta-box .icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+      opacity: 0.85;
+    }
+    .cta-box h2 {
+      font-size: clamp(22px, 3.5vw, 30px);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .cta-box p {
+      color: rgba(255,255,255,0.8);
+      max-width: 560px;
+      margin: 0 auto 30px;
+      font-size: 15px;
+    }
+    .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-white {
+      background: #fff;
+      color: var(--fg);
+    }
+    .btn-white:hover { background: #f0f0f0; }
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.35);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+    /* ===== CLOSING ===== */
+    .closing {
+      padding: 70px 0;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .closing .heart {
+      font-size: 32px;
+      margin-bottom: 16px;
+      display: inline-block;
+      animation: float 3s ease-in-out infinite;
+    }
+    .closing blockquote {
+      font-family: 'Amiri', serif;
+      font-size: 20px;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+    .closing p {
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto;
+      font-size: 15px;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 30px 0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in {
+      animation: fadeInUp 0.6s ease-out both;
+    }
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.3s; }
+    .delay-3 { animation-delay: 0.45s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .cta-box { padding: 36px 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-logo">R</div>
+        <div>
+          <div class="header-title">Komunitas Mutiara</div>
+          <div class="header-subtitle">Tech · Islam · Kehidupan</div>
+        </div>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="container">
+        <ul>
+          <li><a href="#" class="active">Home</a></li>
+          <li><a href="#">Daftar Isi</a></li>
+          <li><a href="#">Doa-Doa</a></li>
+          <li><a href="#">Tutorial</a></li>
+          <li><a href="#">Teknologi</a></li>
+          <li><a href="#">Pengetahuan</a></li>
+          <li><a href="#">Pemrograman</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero-bismillah animate-in">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+      <h1 class="animate-in delay-1">
+        <span class="gradient-text">Assalamu'alaikum,</span><br>
+        Saya Rafi 👋
+      </h1>
+      <p class="animate-in delay-2">
+        Suka belajar teknologi, pemrograman, tapi juga ingin tetap dekat dengan nilai-nilai islami dan cerita hidup yang <em>real</em>?
+      </p>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container">
+      <div class="features-heading">
+        <h2>Apa yang Saya Bagikan?</h2>
+        <p>Di blog ini, kamu akan menemukan:</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card animate-in delay-1">
+          <div class="feature-icon tech">💻</div>
+          <h3>Tutorial Pemrograman</h3>
+          <p>Tutorial dan catatan pemrograman ala anak kampus IT</p>
+        </div>
+        <div class="feature-card animate-in delay-2">
+          <div class="feature-icon islam">🌙</div>
+          <h3>Doa &amp; Refleksi</h3>
+          <p>Doa-doa mustajab dan refleksi sebagai seorang muslim</p>
+        </div>
+        <div class="feature-card animate-in delay-3">
+          <div class="feature-icon tech">📍</div>
+          <h3>Cerita Perjalanan</h3>
+          <p>Cerita perjalanan dari Garut ke Bandung, lengkap dengan puisi dan pengalaman sehari-hari</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL -->
+  <div class="social">
+    <a href="#" class="fb">f</a>
+    <a href="#" class="tw">t</a>
+    <a href="#" class="yt">▶</a>
+    <a href="#" class="ig">ig</a>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-box">
+        <div class="icon">📖</div>
+        <h2>Kalau kamu merasa butuh teman belajar yang santai tapi serius...</h2>
+        <p>Ingin berkembang di era teknologi 4.0? Kamu ada di tempat yang tepat. Jangan buru-buru pergi — coba baca beberapa tulisan, tinggalkan komentar, atau share artikel yang menurutmu bermanfaat.</p>
+        <div class="cta-buttons">
+          <a href="#" class="btn btn-white">🔖 Bookmark Blog</a>
+          <a href="#" class="btn btn-outline">📤 Share Artikel</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing">
+    <div class="container">
+      <div class="heart">❤️</div>
+      <blockquote>"Jadilah pelanggan tetap blog ini"</blockquote>
+      <p>Bookmark, follow, atau simpan alamat blog ini supaya kamu nggak ketinggalan update terbaru. Dari sini, semoga kita bisa saling menyapa, berbagi ilmu, dan menjalin silaturahmi lewat tulisan.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 Komunitas Mutiara — Blog by Rafi</p>
+      <p>Garut → Bandung 🇮🇩</p>
+    </div>
+  </footer>
+
+</body>
+</html>
