@@ -67,18 +67,21 @@ const features = [
     title: "Tutorial Pemrograman",
     desc: "Tutorial dan catatan pemrograman ala anak kampus IT",
     color: "bg-primary/10 text-primary",
+    path: "/tutorial",
   },
   {
     icon: Moon,
     title: "Doa & Refleksi",
     desc: "Doa-doa mustajab dan refleksi sebagai seorang muslim",
     color: "bg-accent/10 text-accent",
+    path: "/doa-doa",
   },
   {
     icon: MapPin,
     title: "Cerita Perjalanan",
     desc: "Cerita perjalanan dari Garut ke Bandung, lengkap dengan puisi dan pengalaman sehari-hari",
     color: "bg-primary/10 text-primary",
+    path: "/cerita-perjalanan",
   },
 ];
 
