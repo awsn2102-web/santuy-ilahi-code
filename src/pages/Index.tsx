@@ -1,4 +1,15 @@
+import { Link } from "react-router-dom";
 import { Book, Code, Moon, MapPin, Heart, BookOpen, MessageCircle, Share2, Bookmark } from "lucide-react";
+
+const navItems = [
+  { label: "Home", path: "/" },
+  { label: "Daftar Isi", path: "/daftar-isi" },
+  { label: "Doa-Doa", path: "/doa-doa" },
+  { label: "Tutorial", path: "/tutorial" },
+  { label: "Teknologi", path: "/teknologi" },
+  { label: "Pengetahuan", path: "/pengetahuan" },
+  { label: "Pemrograman", path: "/pemrograman" },
+];
 
 const BlogHeader = () => (
   <header className="blog-gradient-bg">
@@ -16,11 +27,11 @@ const BlogHeader = () => (
     <nav className="border-t border-primary-foreground/10">
       <div className="container mx-auto px-4">
         <ul className="flex gap-1 overflow-x-auto py-2 text-sm font-medium">
-          {["Home", "Daftar Isi", "Doa-Doa", "Tutorial", "Teknologi", "Pengetahuan", "Pemrograman"].map((item) => (
-            <li key={item}>
-              <a href="#" className="px-4 py-2 rounded-lg text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground transition-all block whitespace-nowrap">
-                {item}
-              </a>
+          {navItems.map((item) => (
+            <li key={item.label}>
+              <Link to={item.path} className="px-4 py-2 rounded-lg text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground transition-all block whitespace-nowrap">
+                {item.label}
+              </Link>
             </li>
           ))}
         </ul>
