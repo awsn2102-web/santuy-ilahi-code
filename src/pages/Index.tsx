@@ -1,4 +1,15 @@
+import { Link } from "react-router-dom";
 import { Book, Code, Moon, MapPin, Heart, BookOpen, MessageCircle, Share2, Bookmark } from "lucide-react";
+
+const navItems = [
+  { label: "Home", path: "/" },
+  { label: "Daftar Isi", path: "/daftar-isi" },
+  { label: "Doa-Doa", path: "/doa-doa" },
+  { label: "Tutorial", path: "/tutorial" },
+  { label: "Teknologi", path: "/teknologi" },
+  { label: "Pengetahuan", path: "/pengetahuan" },
+  { label: "Pemrograman", path: "/pemrograman" },
+];
 
 const BlogHeader = () => (
   <header className="blog-gradient-bg">
@@ -16,11 +27,11 @@ const BlogHeader = () => (
     <nav className="border-t border-primary-foreground/10">
       <div className="container mx-auto px-4">
         <ul className="flex gap-1 overflow-x-auto py-2 text-sm font-medium">
-          {["Home", "Daftar Isi", "Doa-Doa", "Tutorial", "Teknologi", "Pengetahuan", "Pemrograman"].map((item) => (
-            <li key={item}>
-              <a href="#" className="px-4 py-2 rounded-lg text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground transition-all block whitespace-nowrap">
-                {item}
-              </a>
+          {navItems.map((item) => (
+            <li key={item.label}>
+              <Link to={item.path} className="px-4 py-2 rounded-lg text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground transition-all block whitespace-nowrap">
+                {item.label}
+              </Link>
             </li>
           ))}
         </ul>
@@ -56,18 +67,21 @@ const features = [
     title: "Tutorial Pemrograman",
     desc: "Tutorial dan catatan pemrograman ala anak kampus IT",
     color: "bg-primary/10 text-primary",
+    path: "/tutorial",
   },
   {
     icon: Moon,
     title: "Doa & Refleksi",
     desc: "Doa-doa mustajab dan refleksi sebagai seorang muslim",
     color: "bg-accent/10 text-accent",
+    path: "/doa-doa",
   },
   {
     icon: MapPin,
     title: "Cerita Perjalanan",
     desc: "Cerita perjalanan dari Garut ke Bandung, lengkap dengan puisi dan pengalaman sehari-hari",
     color: "bg-primary/10 text-primary",
+    path: "/cerita-perjalanan",
   },
 ];
 
@@ -78,7 +92,8 @@ const FeaturesSection = () => (
       <p className="text-muted-foreground text-center mb-12">Di blog ini, kamu akan menemukan:</p>
       <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
         {features.map((f, i) => (
-          <div
+          <Link
+            to={f.path}
             key={f.title}
             className="group p-6 rounded-2xl border bg-background hover:blog-shadow-lg transition-all duration-300 hover:-translate-y-1 animate-fade-in-up"
             style={{ animationDelay: `${i * 150}ms` }}
@@ -88,7 +103,7 @@ const FeaturesSection = () => (
             </div>
             <h3 className="font-bold text-lg mb-2">{f.title}</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
