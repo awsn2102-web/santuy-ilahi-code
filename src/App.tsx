@@ -12,6 +12,7 @@ import Teknologi from "./pages/Teknologi";
 import Pengetahuan from "./pages/Pengetahuan";
 import Pemrograman from "./pages/Pemrograman";
 import CeritaPerjalanan from "./pages/CeritaPerjalanan";
+import SnakeGame from "./pages/SnakeGame";
 
 const queryClient = new QueryClient();
 
