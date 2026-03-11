@@ -9,6 +9,7 @@ const navItems = [
   { label: "Teknologi", path: "/teknologi" },
   { label: "Pengetahuan", path: "/pengetahuan" },
   { label: "Pemrograman", path: "/pemrograman" },
+  { label: "🎮 Game", path: "/snake-game" },
 ];
 
 const BlogHeader = () => (
