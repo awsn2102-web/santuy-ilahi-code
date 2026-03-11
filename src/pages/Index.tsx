@@ -92,7 +92,8 @@ const FeaturesSection = () => (
       <p className="text-muted-foreground text-center mb-12">Di blog ini, kamu akan menemukan:</p>
       <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
         {features.map((f, i) => (
-          <div
+          <Link
+            to={f.path}
             key={f.title}
             className="group p-6 rounded-2xl border bg-background hover:blog-shadow-lg transition-all duration-300 hover:-translate-y-1 animate-fade-in-up"
             style={{ animationDelay: `${i * 150}ms` }}
@@ -102,7 +103,7 @@ const FeaturesSection = () => (
             </div>
             <h3 className="font-bold text-lg mb-2">{f.title}</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
