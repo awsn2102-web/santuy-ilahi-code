@@ -12,6 +12,7 @@ import Teknologi from "./pages/Teknologi";
 import Pengetahuan from "./pages/Pengetahuan";
 import Pemrograman from "./pages/Pemrograman";
 import CeritaPerjalanan from "./pages/CeritaPerjalanan";
+import SnakeGame from "./pages/SnakeGame";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/pengetahuan" element={<Pengetahuan />} />
           <Route path="/pemrograman" element={<Pemrograman />} />
           <Route path="/cerita-perjalanan" element={<CeritaPerjalanan />} />
+          <Route path="/snake-game" element={<SnakeGame />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

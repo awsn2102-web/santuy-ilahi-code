@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Book, Code, Moon, MapPin, Heart, BookOpen, MessageCircle, Share2, Bookmark } from "lucide-react";
+import { Book, Code, Moon, MapPin, Heart, BookOpen, MessageCircle, Share2, Bookmark, Gamepad2 } from "lucide-react";
 
 const navItems = [
   { label: "Home", path: "/" },
@@ -9,6 +9,7 @@ const navItems = [
   { label: "Teknologi", path: "/teknologi" },
   { label: "Pengetahuan", path: "/pengetahuan" },
   { label: "Pemrograman", path: "/pemrograman" },
+  { label: "🎮 Game", path: "/snake-game" },
 ];
 
 const BlogHeader = () => (
