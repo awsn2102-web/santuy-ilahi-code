@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Book, Code, Moon, MapPin, Heart, BookOpen, MessageCircle, Share2, Bookmark } from "lucide-react";
+import { Book, Code, Moon, MapPin, Heart, BookOpen, MessageCircle, Share2, Bookmark, Gamepad2 } from "lucide-react";
 
 const navItems = [
   { label: "Home", path: "/" },
