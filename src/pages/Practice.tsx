@@ -1,0 +1,187 @@
+import { useState, useRef } from "react";
+import { Layout } from "@/components/Layout";
+import { Mic, Type, Sparkles, Play, Square, Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+
+type Mode = "text" | "voice";
+
+const sampleFeedback = {
+  scoreOverall: 82,
+  scores: [
+    { label: "Clarity", value: 88 },
+    { label: "Structure", value: 84 },
+    { label: "Engagement", value: 76 },
+    { label: "Confidence", value: 80 },
+  ],
+  strengths: [
+    "Pembukaan menarik dengan hook yang relevan dan personal.",
+    "Argumen utama tersusun rapi (problem → solusi → call to action).",
+    "Pemilihan kata sederhana namun kuat.",
+  ],
+  improvements: [
+    "Perbanyak jeda strategis untuk efek dramatis di kalimat penutup.",
+    "Tambahkan satu data atau angka spesifik untuk memperkuat klaim.",
+    "Hindari pengulangan kata 'sangat' — variasikan dengan sinonim.",
+  ],
+  xpEarned: 120,
+};
+
+const Practice = () => {
+  const [mode, setMode] = useState<Mode>("text");
+  const [text, setText] = useState("");
+  const [recording, setRecording] = useState(false);
+  const [recordTime, setRecordTime] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
+  const [feedback, setFeedback] = useState<typeof sampleFeedback | null>(null);
+  const timerRef = useRef<number | null>(null);
+
+  const startRecord = () => {
+    setRecording(true);
+    setRecordTime(0);
+    timerRef.current = window.setInterval(() => setRecordTime((t) => t + 1), 1000);
+  };
+  const stopRecord = () => {
+    setRecording(false);
+    if (timerRef.current) window.clearInterval(timerRef.current);
+  };
+
+  const submit = () => {
+    setSubmitting(true);
+    setFeedback(null);
+    setTimeout(() => {
+      setFeedback(sampleFeedback);
+      setSubmitting(false);
+    }, 1800);
+  };
+
+  const fmt = (s: number) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+  const canSubmit = mode === "text" ? text.trim().length > 20 : recordTime > 3 && !recording;
+
+  return (
+    <Layout>
+      <div className="container mx-auto px-4 py-8 md:py-12 max-w-5xl">
+        <div className="mb-8 animate-fade-in-up">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 text-accent-foreground text-xs font-semibold uppercase tracking-wider mb-3">
+            <Sparkles className="w-3.5 h-3.5" /> AI Practice Room
+          </span>
+          <h1 className="font-display text-4xl md:text-5xl font-black mb-2">Latihan dengan <span className="text-gradient">AI Feedback</span></h1>
+          <p className="text-muted-foreground">Ketik naskah atau rekam suaramu — AI akan menganalisis dan memberikan feedback dalam hitungan detik.</p>
+        </div>
+
+        {/* Mode tabs */}
+        <div className="bg-card border border-border rounded-2xl p-2 inline-flex gap-2 mb-6">
+          <button onClick={() => { setMode("text"); setFeedback(null); }} className={`px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all ${mode === "text" ? "gradient-purple text-primary-foreground shadow-card" : "hover:bg-secondary"}`}>
+            <Type className="w-4 h-4" /> Teks
+          </button>
+          <button onClick={() => { setMode("voice"); setFeedback(null); }} className={`px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all ${mode === "voice" ? "gradient-purple text-primary-foreground shadow-card" : "hover:bg-secondary"}`}>
+            <Mic className="w-4 h-4" /> Suara
+          </button>
+        </div>
+
+        {/* Input area */}
+        <div className="bg-card border border-border rounded-3xl p-6 md:p-8 mb-6">
+          <div className="mb-4">
+            <h2 className="font-display font-bold text-lg mb-1">Topik: "Kenapa belajar publik speaking penting di era AI?"</h2>
+            <p className="text-sm text-muted-foreground">Durasi target: 60–90 detik · Target XP: +120</p>
+          </div>
+
+          {mode === "text" ? (
+            <textarea
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Tulis naskah pidatomu di sini... Mulai dengan hook yang menarik, lalu masuk ke argumen utama, dan akhiri dengan call-to-action."
+              className="w-full min-h-[240px] p-4 rounded-xl border-2 border-border bg-background focus:border-primary focus:outline-none text-base leading-relaxed resize-none transition-colors"
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center py-8 bg-secondary/40 rounded-2xl border-2 border-dashed border-border">
+              <button
+                onClick={recording ? stopRecord : startRecord}
+                className={`w-24 h-24 rounded-full flex items-center justify-center transition-all ${recording ? "bg-destructive shadow-elev animate-pulse-glow" : "gradient-hero shadow-glow hover:scale-110"}`}
+              >
+                {recording ? <Square className="w-8 h-8 text-primary-foreground fill-current" /> : <Mic className="w-10 h-10 text-primary-foreground" />}
+              </button>
+              <div className="mt-5 text-center">
+                <div className="font-display font-black text-3xl tabular-nums">{fmt(recordTime)}</div>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {recording ? "Sedang merekam... klik untuk berhenti" : recordTime > 0 ? "Klik mic untuk rekam ulang" : "Klik mic untuk mulai rekaman"}
+                </p>
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-center justify-between mt-5">
+            <div className="text-xs text-muted-foreground">
+              {mode === "text" ? `${text.trim().split(/\s+/).filter(Boolean).length} kata` : recording ? "● Live" : "Siap kirim"}
+            </div>
+            <button
+              onClick={submit}
+              disabled={!canSubmit || submitting}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl gradient-hero text-primary-foreground font-bold shadow-glow disabled:opacity-50 disabled:cursor-not-allowed enabled:hover:scale-105 transition-transform"
+            >
+              {submitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Menganalisis...</> : <><Send className="w-4 h-4" /> Dapatkan Feedback AI</>}
+            </button>
+          </div>
+        </div>
+
+        {/* Feedback */}
+        {feedback && (
+          <div className="space-y-5 animate-fade-in-up">
+            <div className="grid md:grid-cols-[auto_1fr] gap-6 items-center bg-card border-2 border-success/30 rounded-3xl p-6 md:p-8">
+              <div className="relative w-32 h-32 mx-auto">
+                <svg viewBox="0 0 100 100" className="w-32 h-32 -rotate-90">
+                  <circle cx="50" cy="50" r="44" stroke="hsl(var(--muted))" strokeWidth="9" fill="none" />
+                  <circle cx="50" cy="50" r="44" stroke="hsl(var(--success))" strokeWidth="9" fill="none" strokeDasharray={`${(feedback.scoreOverall / 100) * 276} 276`} strokeLinecap="round" />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="font-display font-black text-3xl">{feedback.scoreOverall}</div>
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Score</div>
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <CheckCircle2 className="w-5 h-5 text-success" />
+                  <span className="text-sm font-bold text-success uppercase tracking-wider">Great Job!</span>
+                </div>
+                <h2 className="font-display font-black text-2xl mb-2">+{feedback.xpEarned} XP earned 🎉</h2>
+                <p className="text-muted-foreground text-sm mb-4">Performamu di atas rata-rata. Berikut breakdown skor per dimensi:</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {feedback.scores.map((s) => (
+                    <div key={s.label}>
+                      <div className="flex justify-between text-xs mb-1">
+                        <span className="font-semibold">{s.label}</span>
+                        <span className="text-muted-foreground">{s.value}/100</span>
+                      </div>
+                      <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full gradient-purple rounded-full" style={{ width: `${s.value}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-5">
+              <div className="bg-card border border-success/30 rounded-2xl p-6">
+                <h3 className="font-display font-bold flex items-center gap-2 mb-4 text-success"><CheckCircle2 className="w-5 h-5" /> Kekuatan</h3>
+                <ul className="space-y-3">
+                  {feedback.strengths.map((s, i) => (
+                    <li key={i} className="text-sm flex gap-2"><span className="text-success">✓</span> {s}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="bg-card border border-accent/40 rounded-2xl p-6">
+                <h3 className="font-display font-bold flex items-center gap-2 mb-4 text-accent-foreground"><AlertCircle className="w-5 h-5" /> Saran Perbaikan</h3>
+                <ul className="space-y-3">
+                  {feedback.improvements.map((s, i) => (
+                    <li key={i} className="text-sm flex gap-2"><span className="text-accent">→</span> {s}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </Layout>
+  );
+};
+
+export default Practice;

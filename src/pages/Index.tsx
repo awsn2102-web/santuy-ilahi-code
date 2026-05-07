@@ -1,192 +1,140 @@
 import { Link } from "react-router-dom";
-import { Book, Code, Moon, MapPin, Heart, BookOpen, MessageCircle, Share2, Bookmark, Gamepad2 } from "lucide-react";
-
-const navItems = [
-  { label: "Home", path: "/" },
-  { label: "Daftar Isi", path: "/daftar-isi" },
-  { label: "Doa-Doa", path: "/doa-doa" },
-  { label: "Tutorial", path: "/tutorial" },
-  { label: "Teknologi", path: "/teknologi" },
-  { label: "Pengetahuan", path: "/pengetahuan" },
-  { label: "Pemrograman", path: "/pemrograman" },
-  { label: "🎮 Game", path: "/snake-game" },
-];
-
-const BlogHeader = () => (
-  <header className="blog-gradient-bg">
-    <div className="container mx-auto px-4 py-6">
-      <div className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-xl bg-background/20 flex items-center justify-center text-2xl font-bold text-primary-foreground backdrop-blur-sm">
-          R
-        </div>
-        <div>
-          <h2 className="text-xl font-bold text-primary-foreground tracking-tight">Komunitas Mutiara</h2>
-          <p className="text-primary-foreground/70 text-xs">Tech · Islam · Kehidupan</p>
-        </div>
-      </div>
-    </div>
-    <nav className="border-t border-primary-foreground/10">
-      <div className="container mx-auto px-4">
-        <ul className="flex gap-1 overflow-x-auto py-2 text-sm font-medium">
-          {navItems.map((item) => (
-            <li key={item.label}>
-              <Link to={item.path} className="px-4 py-2 rounded-lg text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground transition-all block whitespace-nowrap">
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
-  </header>
-);
-
-const HeroSection = () => (
-  <section className="relative overflow-hidden py-16 md:py-24">
-    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-    <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-primary/5 blur-3xl" />
-    <div className="absolute bottom-10 left-10 w-48 h-48 rounded-full bg-accent/5 blur-3xl" />
-    <div className="container mx-auto px-4 relative">
-      <div className="max-w-3xl mx-auto text-center animate-fade-in-up">
-        <p className="font-arabic text-lg text-muted-foreground mb-4">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
-          <span className="blog-gradient-text">Assalamu'alaikum,</span>
-          <br />
-          <span className="text-foreground">Saya Rafi 👋</span>
-        </h1>
-        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-          Suka belajar teknologi, pemrograman, tapi juga ingin tetap dekat dengan nilai-nilai islami dan cerita hidup yang <em className="text-foreground font-medium not-italic">real</em>?
-        </p>
-      </div>
-    </div>
-  </section>
-);
-
-const features = [
-  {
-    icon: Code,
-    title: "Tutorial Pemrograman",
-    desc: "Tutorial dan catatan pemrograman ala anak kampus IT",
-    color: "bg-primary/10 text-primary",
-    path: "/tutorial",
-  },
-  {
-    icon: Moon,
-    title: "Doa & Refleksi",
-    desc: "Doa-doa mustajab dan refleksi sebagai seorang muslim",
-    color: "bg-accent/10 text-accent",
-    path: "/doa-doa",
-  },
-  {
-    icon: MapPin,
-    title: "Cerita Perjalanan",
-    desc: "Cerita perjalanan dari Garut ke Bandung, lengkap dengan puisi dan pengalaman sehari-hari",
-    color: "bg-primary/10 text-primary",
-    path: "/cerita-perjalanan",
-  },
-];
-
-const FeaturesSection = () => (
-  <section className="py-16 bg-card">
-    <div className="container mx-auto px-4">
-      <h2 className="text-2xl font-bold text-center mb-2">Apa yang Saya Bagikan?</h2>
-      <p className="text-muted-foreground text-center mb-12">Di blog ini, kamu akan menemukan:</p>
-      <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-        {features.map((f, i) => (
-          <Link
-            to={f.path}
-            key={f.title}
-            className="group p-6 rounded-2xl border bg-background hover:blog-shadow-lg transition-all duration-300 hover:-translate-y-1 animate-fade-in-up"
-            style={{ animationDelay: `${i * 150}ms` }}
-          >
-            <div className={`w-12 h-12 rounded-xl ${f.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-              <f.icon className="w-6 h-6" />
-            </div>
-            <h3 className="font-bold text-lg mb-2">{f.title}</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
-          </Link>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-const CTASection = () => (
-  <section className="py-16">
-    <div className="container mx-auto px-4">
-      <div className="max-w-3xl mx-auto blog-gradient-bg rounded-3xl p-8 md:p-12 text-center blog-shadow-lg">
-        <BookOpen className="w-10 h-10 text-primary-foreground/80 mx-auto mb-4" />
-        <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground mb-4">
-          Kalau kamu merasa butuh teman belajar yang santai tapi serius...
-        </h2>
-        <p className="text-primary-foreground/80 mb-8 leading-relaxed max-w-xl mx-auto">
-          Ingin berkembang di era teknologi 4.0? Kamu ada di tempat yang tepat. Jangan buru-buru pergi — coba baca beberapa tulisan, tinggalkan komentar, atau share artikel yang menurutmu bermanfaat.
-        </p>
-        <div className="flex flex-wrap justify-center gap-3">
-          <button className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-background text-foreground font-semibold hover:bg-background/90 transition-colors text-sm">
-            <Bookmark className="w-4 h-4" /> Bookmark Blog
-          </button>
-          <button className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-primary-foreground/30 text-primary-foreground font-semibold hover:bg-primary-foreground/10 transition-colors text-sm">
-            <Share2 className="w-4 h-4" /> Share Artikel
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
-const ClosingSection = () => (
-  <section className="py-16 bg-card border-t">
-    <div className="container mx-auto px-4 text-center max-w-2xl">
-      <Heart className="w-8 h-8 text-accent mx-auto mb-4 animate-float" />
-      <p className="text-lg text-muted-foreground leading-relaxed font-arabic italic mb-4">
-        "Jadilah pelanggan tetap blog ini"
-      </p>
-      <p className="text-muted-foreground leading-relaxed">
-        Bookmark, follow, atau simpan alamat blog ini supaya kamu nggak ketinggalan update terbaru. Dari sini, semoga kita bisa saling menyapa, berbagi ilmu, dan menjalin silaturahmi lewat tulisan.
-      </p>
-    </div>
-  </section>
-);
-
-const SocialLinks = () => {
-  const socials = [
-    { label: "Facebook", color: "bg-[hsl(220,70%,50%)]" },
-    { label: "Twitter", color: "bg-[hsl(200,85%,55%)]" },
-    { label: "YouTube", color: "bg-[hsl(0,80%,50%)]" },
-    { label: "Instagram", color: "bg-[hsl(330,70%,55%)]" },
-  ];
-  return (
-    <div className="flex justify-center gap-3 py-8">
-      {socials.map((s) => (
-        <a key={s.label} href="#" className={`${s.color} text-primary-foreground w-10 h-10 rounded-xl flex items-center justify-center text-xs font-bold hover:scale-110 transition-transform`}>
-          {s.label[0]}
-        </a>
-      ))}
-    </div>
-  );
-};
-
-const Footer = () => (
-  <footer className="border-t py-8">
-    <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-      <p>© 2025 Komunitas Mutiara — Blog by Rafi</p>
-      <p className="mt-1">Garut → Bandung 🇮🇩</p>
-    </div>
-  </footer>
-);
+import { Layout } from "@/components/Layout";
+import { Mic, Trophy, Target, Brain, Zap, Users, Sparkles, ArrowRight, Play, Star, CheckCircle2 } from "lucide-react";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <BlogHeader />
-      <HeroSection />
-      <FeaturesSection />
-      <SocialLinks />
-      <CTASection />
-      <ClosingSection />
-      <Footer />
-    </div>
+    <Layout>
+      {/* HERO */}
+      <section className="relative overflow-hidden gradient-mesh">
+        <div className="absolute top-20 right-10 w-72 h-72 rounded-full gradient-purple opacity-20 blur-3xl animate-float" />
+        <div className="absolute bottom-10 left-10 w-64 h-64 rounded-full gradient-gold opacity-20 blur-3xl animate-float" style={{ animationDelay: "1s" }} />
+
+        <div className="container mx-auto px-4 pt-16 pb-24 md:pt-24 md:pb-32 relative">
+          <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6">
+              <Sparkles className="w-3.5 h-3.5 text-primary" />
+              <span className="text-xs font-semibold text-primary uppercase tracking-wider">Powered by AI Feedback</span>
+            </div>
+            <h1 className="font-display font-black text-5xl md:text-7xl leading-[0.95] tracking-tight mb-6">
+              Belajar Public Speaking<br />
+              <span className="text-gradient">Seperti Main Game</span>
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+              Naik level dari <span className="font-bold text-foreground">Basic</span> →{" "}
+              <span className="font-bold text-gradient-gold">Silver</span> →{" "}
+              <span className="font-bold text-gradient-gold">Gold</span> lewat challenge interaktif,
+              feedback AI real-time, dan progress yang terukur.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3 mb-12">
+              <Link to="/dashboard" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl gradient-hero text-primary-foreground font-semibold shadow-glow hover:scale-105 transition-transform">
+                <Play className="w-4 h-4" /> Mulai Quest Gratis
+              </Link>
+              <Link to="/levels" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-card border-2 border-border font-semibold hover:border-primary transition-all">
+                Lihat Level <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 max-w-2xl mx-auto gap-4 md:gap-8">
+              {[
+                { num: "60+", label: "Challenges" },
+                { num: "3", label: "Tier Levels" },
+                { num: "AI", label: "Feedback Realtime" },
+              ].map((s) => (
+                <div key={s.label} className="text-center">
+                  <div className="font-display text-3xl md:text-4xl font-black text-gradient">{s.num}</div>
+                  <div className="text-xs md:text-sm text-muted-foreground mt-1">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TIER LEVELS SHOWCASE */}
+      <section className="py-20 container mx-auto px-4">
+        <div className="text-center mb-14">
+          <h2 className="font-display text-3xl md:text-5xl font-black mb-4">Tiga Tier, Satu Perjalanan</h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">Setiap tier dirancang untuk mengembangkan skill spesifik dengan tingkat tantangan yang naik bertahap.</p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {[
+            { tier: "Basic", grad: "gradient-bronze", icon: "🥉", desc: "Fondasi: pernapasan, artikulasi, percaya diri.", skills: ["Voice Warm-Up", "Self Intro", "Eye Contact"] },
+            { tier: "Silver", grad: "gradient-silver", icon: "🥈", desc: "Bangun struktur, persuasi, dan storytelling.", skills: ["Persuasive Pitch", "Storytelling", "Q&A Handling"] },
+            { tier: "Gold", grad: "gradient-gold", icon: "🥇", desc: "Master keynote, debat, dan stage presence.", skills: ["Debate", "Keynote", "Crisis Comm"] },
+          ].map((t, i) => (
+            <div key={t.tier} className="relative group animate-fade-in-up" style={{ animationDelay: `${i * 120}ms` }}>
+              <div className="relative bg-card border-2 border-border rounded-3xl p-7 hover:border-primary/40 hover:shadow-elev transition-all duration-300 hover:-translate-y-1">
+                <div className={`w-16 h-16 rounded-2xl ${t.grad} flex items-center justify-center text-3xl mb-5 shadow-card`}>
+                  {t.icon}
+                </div>
+                <h3 className="font-display font-black text-2xl mb-2">{t.tier} Tier</h3>
+                <p className="text-sm text-muted-foreground mb-5">{t.desc}</p>
+                <ul className="space-y-2">
+                  {t.skills.map((s) => (
+                    <li key={s} className="flex items-center gap-2 text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-success" /> {s}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FEATURES */}
+      <section className="py-20 bg-secondary/40">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-14">
+            <h2 className="font-display text-3xl md:text-5xl font-black mb-4">Kenapa <span className="text-gradient">SpeakUpQuest</span>?</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">Belajar public speaking yang dulu membosankan, kini terasa seperti petualangan.</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
+            {[
+              { icon: Target, title: "60+ Challenge Interaktif", desc: "Mulai dari tongue twister hingga TED-style keynote." },
+              { icon: Brain, title: "AI Feedback Cerdas", desc: "Analisis struktur, klaritas, dan emosi dari naskah atau rekaman suaramu." },
+              { icon: Trophy, title: "XP, Badge & Leaderboard", desc: "Naik level seperti game RPG. Kumpulkan badge dan saingi teman." },
+              { icon: Zap, title: "Progress Terukur", desc: "Skill radar, weekly XP, dan streak harian — semua kelihatan." },
+              { icon: Mic, title: "Latih Teks atau Suara", desc: "Pilih ketik naskah atau rekam suaramu. Keduanya didukung." },
+              { icon: Users, title: "Komunitas Pejuang", desc: "Lihat ranking dan tier sesama pejuang public speaking." },
+            ].map((f, i) => (
+              <div key={f.title} className="bg-card rounded-2xl p-6 border border-border hover:border-primary/40 hover:shadow-card transition-all animate-fade-in-up" style={{ animationDelay: `${i * 80}ms` }}>
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <f.icon className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-display font-bold text-lg mb-2">{f.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIAL / CTA */}
+      <section className="py-20 container mx-auto px-4">
+        <div className="relative max-w-5xl mx-auto rounded-3xl gradient-hero p-10 md:p-16 text-center shadow-elev overflow-hidden">
+          <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-accent/30 blur-3xl" />
+          <div className="absolute -bottom-10 -left-10 w-48 h-48 rounded-full bg-primary-foreground/20 blur-3xl" />
+          <div className="relative">
+            <div className="flex justify-center gap-1 mb-5">
+              {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-accent text-accent" />)}
+            </div>
+            <h2 className="font-display text-3xl md:text-5xl font-black text-primary-foreground mb-5">
+              Siap Naik Level?
+            </h2>
+            <p className="text-primary-foreground/90 text-lg max-w-xl mx-auto mb-8">
+              Gratis untuk dicoba. Mulai dari tier Basic, kumpulkan XP, dan buktikan kamu bisa jadi keynote speaker selanjutnya.
+            </p>
+            <Link to="/dashboard" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-card text-foreground font-bold shadow-elev hover:scale-105 transition-transform">
+              Masuk Dashboard <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+    </Layout>
   );
 };
 
