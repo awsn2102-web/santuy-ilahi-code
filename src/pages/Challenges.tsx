@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { challenges } from "@/data/mockData";
-import { Target, Clock, Zap, Filter } from "lucide-react";
+import { Target, Clock, Zap, Filter, Search } from "lucide-react";
 
 const filters = ["All", "Basic", "Silver", "Gold"];
 const diffColors: Record<string, string> = {
@@ -13,7 +13,11 @@ const diffColors: Record<string, string> = {
 
 const Challenges = () => {
   const [active, setActive] = useState("All");
-  const list = active === "All" ? challenges : challenges.filter((c) => c.level === active);
+  const [search, setSearch] = useState("");
+  
+  const filtered = challenges
+    .filter((c) => active === "All" || c.level === active)
+    .filter((c) => c.title.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <Layout>
@@ -34,8 +38,21 @@ const Challenges = () => {
           </div>
         </div>
 
+        <div className="mb-6 max-w-md">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Cari challenge (contoh: debate, storytelling...)"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
+        </div>
+
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {list.map((c, i) => (
+          {filtered.map((c, i) => (
             <Link to="/practice" key={c.id} className="group relative bg-card border-2 border-border rounded-2xl p-6 hover:border-primary hover:shadow-elev hover:-translate-y-1 transition-all animate-scale-in" style={{ animationDelay: `${i * 50}ms` }}>
               <div className="flex items-start justify-between mb-4">
                 <div className="text-5xl group-hover:scale-110 transition-transform">{c.icon}</div>

@@ -32,16 +32,70 @@ const Practice = () => {
   const [recordTime, setRecordTime] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<typeof sampleFeedback | null>(null);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [playbackTime, setPlaybackTime] = useState(0);
   const timerRef = useRef<number | null>(null);
+  const playbackTimerRef = useRef<number | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const startRecord = () => {
-    setRecording(true);
-    setRecordTime(0);
-    timerRef.current = window.setInterval(() => setRecordTime((t) => t + 1), 1000);
+  const startRecord = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      audioChunksRef.current = [];
+      
+      mediaRecorderRef.current.ondataavailable = (event) => {
+        audioChunksRef.current.push(event.data);
+      };
+      
+      mediaRecorderRef.current.onstop = () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+        const url = URL.createObjectURL(audioBlob);
+        setAudioUrl(url);
+        stream.getTracks().forEach(track => track.stop());
+      };
+      
+      mediaRecorderRef.current.start();
+      setRecording(true);
+      setRecordTime(0);
+      timerRef.current = window.setInterval(() => setRecordTime((t) => t + 1), 1000);
+    } catch (err) {
+      console.error("Error accessing microphone:", err);
+    }
   };
+  
   const stopRecord = () => {
+    if (mediaRecorderRef.current && recording) {
+      mediaRecorderRef.current.stop();
+    }
     setRecording(false);
     if (timerRef.current) window.clearInterval(timerRef.current);
+  };
+
+  const playAudio = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        if (playbackTimerRef.current) window.clearInterval(playbackTimerRef.current);
+      } else {
+        setPlaybackTime(0);
+        playbackTimerRef.current = window.setInterval(() => {
+          setPlaybackTime((t) => {
+            if (audioRef.current && t >= audioRef.current.duration) {
+              window.clearInterval(playbackTimerRef.current!);
+              setIsPlaying(false);
+              return t;
+            }
+            return t + 0.1;
+          });
+        }, 100);
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
   };
 
   const submit = () => {
@@ -69,7 +123,7 @@ const Practice = () => {
 
         {/* Mode tabs */}
         <div className="bg-card border border-border rounded-2xl p-2 inline-flex gap-2 mb-6">
-          <button onClick={() => { setMode("text"); setFeedback(null); }} className={`px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all ${mode === "text" ? "gradient-purple text-primary-foreground shadow-card" : "hover:bg-secondary"}`}>
+          <button onClick={() => { setMode("text"); setFeedback(null); setAudioUrl(null); setIsPlaying(false); }} className={`px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all ${mode === "text" ? "gradient-purple text-primary-foreground shadow-card" : "hover:bg-secondary"}`}>
             <Type className="w-4 h-4" /> Teks
           </button>
           <button onClick={() => { setMode("voice"); setFeedback(null); }} className={`px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all ${mode === "voice" ? "gradient-purple text-primary-foreground shadow-card" : "hover:bg-secondary"}`}>
@@ -105,12 +159,39 @@ const Practice = () => {
                   {recording ? "Sedang merekam... klik untuk berhenti" : recordTime > 0 ? "Klik mic untuk rekam ulang" : "Klik mic untuk mulai rekaman"}
                 </p>
               </div>
+              {audioUrl && !recording && (
+                <div className="mt-6 flex flex-col items-center gap-3">
+                  <audio 
+                    ref={audioRef} 
+                    src={audioUrl} 
+                    onEnded={() => { 
+                      setIsPlaying(false); 
+                      setPlaybackTime(0);
+                      if (playbackTimerRef.current) window.clearInterval(playbackTimerRef.current);
+                    }} 
+                    onTimeUpdate={() => audioRef.current && setPlaybackTime(audioRef.current.currentTime)}
+                  />
+                  <button
+                    onClick={playAudio}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl gradient-purple text-primary-foreground font-semibold shadow-card hover:scale-105 transition-transform"
+                  >
+                    {isPlaying ? <Square className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                    {isPlaying ? "Pause" : "Putar Rekaman"}
+                  </button>
+                  <div className="text-center">
+                    <span className="text-xs text-muted-foreground">Durasi Rekaman: {fmt(recordTime)}</span>
+                    {isPlaying && (
+                      <div className="text-sm font-mono text-primary">▶ {playbackTime.toFixed(1)}s / {recordTime.toFixed(1)}s</div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
           <div className="flex items-center justify-between mt-5">
             <div className="text-xs text-muted-foreground">
-              {mode === "text" ? `${text.trim().split(/\s+/).filter(Boolean).length} kata` : recording ? "● Live" : "Siap kirim"}
+              {mode === "text" ? `${text.trim().split(/\s+/).filter(Boolean).length} kata` : recording ? "● Live" : ""}
             </div>
             <button
               onClick={submit}
