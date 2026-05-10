@@ -1,8 +1,16 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Layout } from "@/components/Layout";
-import { Mic, Type, Sparkles, Play, Square, Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { Mic, Type, Sparkles, Play, Square, Send, Loader2, CheckCircle2, AlertCircle, MessageSquare, Tag } from "lucide-react";
 
 type Mode = "text" | "voice";
+
+interface InlineFeedback {
+  sentence: string;
+  type: "strength" | "improvement";
+  comment: string;
+  startIndex: number;
+  endIndex: number;
+}
 
 const sampleFeedback = {
   scoreOverall: 82,
@@ -35,11 +43,54 @@ const Practice = () => {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackTime, setPlaybackTime] = useState(0);
+  const [inlineFeedbacks, setInlineFeedbacks] = useState<InlineFeedback[]>([]);
   const timerRef = useRef<number | null>(null);
   const playbackTimerRef = useRef<number | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Simulate AI feedback on text change
+  useEffect(() => {
+    if (mode === "text" && text.length > 20) {
+      const timer = setTimeout(() => {
+        const feedbacks: InlineFeedback[] = [];
+        const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 10);
+        
+        sentences.forEach(sentence => {
+          const lower = sentence.toLowerCase();
+          if (lower.includes("sangat") || lower.includes("banget") || lower.includes("sekali")) {
+            feedbacks.push({
+              sentence,
+              type: "improvement",
+              comment: "Kata berulang - gunakan sinonim untuk variasi",
+              startIndex: text.indexOf(sentence),
+              endIndex: text.indexOf(sentence) + sentence.length
+            });
+          } else if (lower.includes("namun") || lower.includes("tetapi") || lower.includes("oleh karena itu")) {
+            feedbacks.push({
+              sentence,
+              type: "strength",
+              comment: "Transisi logis yang baik",
+              startIndex: text.indexOf(sentence),
+              endIndex: text.indexOf(sentence) + sentence.length
+            });
+          } else if (lower.includes("contoh") || lower.includes("misalnya")) {
+            feedbacks.push({
+              sentence,
+              type: "strength",
+              comment: "Penggunaan contoh mendukung argumen",
+              startIndex: text.indexOf(sentence),
+              endIndex: text.indexOf(sentence) + sentence.length
+            });
+          }
+        });
+        setInlineFeedbacks(feedbacks);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+    setInlineFeedbacks([]);
+  }, [text, mode]);
 
   const startRecord = async () => {
     try {
@@ -139,12 +190,34 @@ const Practice = () => {
           </div>
 
           {mode === "text" ? (
-            <textarea
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              placeholder="Tulis naskah pidatomu di sini... Mulai dengan hook yang menarik, lalu masuk ke argumen utama, dan akhiri dengan call-to-action."
-              className="w-full min-h-[240px] p-4 rounded-xl border-2 border-border bg-background focus:border-primary focus:outline-none text-base leading-relaxed resize-none transition-colors"
-            />
+            <div className="space-y-3">
+              <div className="relative">
+                <textarea
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="Tulis naskah pidatomu di sini... Mulai dengan hook yang menarik, lalu masuk ke argumen utama, dan akhiri dengan call-to-action."
+                  className="w-full min-h-[240px] p-4 rounded-xl border-2 border-border bg-background focus:border-primary focus:outline-none text-base leading-relaxed resize-none transition-colors"
+                />
+                {inlineFeedbacks.length > 0 && (
+                  <div className="absolute top-2 right-2 max-w-xs space-y-2">
+                    {inlineFeedbacks.map((fb, i) => (
+                      <div key={i} className={`p-2 rounded-lg text-xs ${fb.type === "strength" ? "bg-success/10 border border-success/30" : "bg-accent/10 border border-accent/30"}`}>
+                        <div className="flex items-start gap-1">
+                          {fb.type === "strength" ? <CheckCircle2 className="w-3 h-3 text-success mt-0.5" /> : <AlertCircle className="w-3 h-3 text-accent mt-0.5" />}
+                          <div>
+                            <strong className="font-semibold">{fb.type === "strength" ? "Kekuatan" : "Perbaikan"}:</strong> {fb.comment}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="flex items-center gap-2 text-xs">
+                <Tag className="w-3 h-3 text-primary" />
+                <span>AI sedang menganalisis naskah Anda...</span>
+              </div>
+            </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-8 bg-secondary/40 rounded-2xl border-2 border-dashed border-border">
               <button

@@ -3,6 +3,11 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { AuthProvider } from "@/context/AuthContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { LoginPage, RegisterPage } from "@/pages/AuthPages";
+
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
@@ -20,16 +25,25 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/levels" element={<Levels />} />
-          <Route path="/challenges" element={<Challenges />} />
-          <Route path="/practice" element={<Practice />} />
-          <Route path="/progress" element={<Progress />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        {/* AuthProvider di dalam BrowserRouter agar useNavigate bisa dipakai di dalam context */}
+        <AuthProvider>
+          <Routes>
+            {/* Public */}
+            <Route path="/"         element={<Index />} />
+            <Route path="/login"    element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+
+            {/* Protected — wajib login */}
+            <Route path="/dashboard"   element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/levels"      element={<ProtectedRoute><Levels /></ProtectedRoute>} />
+            <Route path="/challenges"  element={<ProtectedRoute><Challenges /></ProtectedRoute>} />
+            <Route path="/practice"    element={<ProtectedRoute><Practice /></ProtectedRoute>} />
+            <Route path="/progress"    element={<ProtectedRoute><Progress /></ProtectedRoute>} />
+            <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
