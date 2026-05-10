@@ -1,6 +1,75 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
-import { Mic, Trophy, Target, Brain, Zap, Users, Sparkles, ArrowRight, Play, Star, CheckCircle2 } from "lucide-react";
+import { Mic, Trophy, Target, Brain, Zap, Users, Sparkles, ArrowRight, Play, Star, CheckCircle2, Send } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+
+const ContactForm = () => {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const sendWhatsapp = () => {
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({ title: "Error", description: "Semua kolom harus diisi!", variant: "destructive" });
+      return;
+    }
+    const phoneNumber = "6285321034886";
+    const text = `Halo, nama saya ${formData.name}%0AEmail: ${formData.email}%0APesan: ${formData.message}`;
+    window.open(`https://wa.me/${phoneNumber}?text=${text}`, "_blank");
+    toast({ title: "WhatsApp Terbuka!", description: "Pesan siap dikirim via WhatsApp." });
+  };
+
+  return (
+    <div className="bg-card border border-border rounded-2xl p-6 space-y-4">
+      <div>
+        <label className="block text-sm font-medium mb-2">Nama</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          className="w-full px-4 py-2 rounded-lg bg-secondary border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Masukkan nama Anda"
+          required
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-2">Email</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          className="w-full px-4 py-2 rounded-lg bg-secondary border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="nama@email.com"
+          required
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-2">Isi Pesan</label>
+        <textarea
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
+          rows={4}
+          className="w-full px-4 py-2 rounded-lg bg-secondary border border-border focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+          placeholder="Tulis pesan Anda di sini..."
+          required
+        />
+      </div>
+      <button
+        onClick={sendWhatsapp}
+        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors"
+      >
+        <Send className="w-4 h-4" /> Kirim via WhatsApp
+      </button>
+    </div>
+  );
+};
 
 const Index = () => {
   return (
@@ -109,6 +178,20 @@ const Index = () => {
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT FORM */}
+      <section className="py-20 bg-secondary/40">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="font-display text-3xl md:text-4xl font-black mb-3">Hubungi Kami</h2>
+              <p className="text-muted-foreground">Ada pertanyaan atau ingin memberikan masukan? Kirim pesan Anda!</p>
+            </div>
+            
+            <ContactForm />
           </div>
         </div>
       </section>
