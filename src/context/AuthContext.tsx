@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
+export const XP_PER_LEVEL = 500;
+
 export interface User {
   id: string;
   name: string;
@@ -7,6 +9,7 @@ export interface User {
   avatar: string;
   xp: number;
   level: number;
+  challengesCompleted: number;
   createdAt: string;
 }
 
@@ -17,7 +20,7 @@ interface AuthContextType {
   register: (name: string, email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   updateProfile: (name: string, avatar: string) => void;
-  addXP: (amount: number) => void;
+  addXP: (amount: number, options?: { countChallenge?: boolean }) => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
