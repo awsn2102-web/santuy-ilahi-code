@@ -16,6 +16,7 @@ import Challenges from "./pages/Challenges";
 import Practice from "./pages/Practice";
 import Progress from "./pages/Progress";
 import Leaderboard from "./pages/Leaderboard";
+import MiniGame from "./pages/MiniGame";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/practice"    element={<ProtectedRoute><Practice /></ProtectedRoute>} />
             <Route path="/progress"    element={<ProtectedRoute><Progress /></ProtectedRoute>} />
             <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
+            <Route path="/mini-game"   element={<ProtectedRoute><MiniGame /></ProtectedRoute>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

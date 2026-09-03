@@ -53,7 +53,7 @@ const Challenges = () => {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {filtered.map((c, i) => (
-            <Link to="/practice" key={c.id} className="group relative bg-card border-2 border-border rounded-2xl p-6 hover:border-primary hover:shadow-elev hover:-translate-y-1 transition-all animate-scale-in" style={{ animationDelay: `${i * 50}ms` }}>
+            <Link to={"isMiniGame" in c && c.isMiniGame ? "/mini-game" : "/practice"} key={c.id} className="group relative bg-card border-2 border-border rounded-2xl p-6 hover:border-primary hover:shadow-elev hover:-translate-y-1 transition-all animate-scale-in" style={{ animationDelay: `${i * 50}ms` }}>
               <div className="flex items-start justify-between mb-4">
                 <div className="text-5xl group-hover:scale-110 transition-transform">{c.icon}</div>
                 <span className="px-2.5 py-1 rounded-full gradient-gold text-accent-foreground font-bold text-xs flex items-center gap-1">
