@@ -78,7 +78,7 @@ export const levels = [
 ];
 
 export const challenges = [
-  { id: 1, title: "60-Detik Self Intro", level: "Basic", xp: 50, time: "1 min", difficulty: "Easy", icon: "👋" },
+  { id: 1, title: "Random Quiz Rush", level: "Basic", xp: 10, time: "5 min", difficulty: "Easy", icon: "🎲", isMiniGame: true },
   { id: 2, title: "Tongue Twister Sprint", level: "Basic", xp: 30, time: "2 min", difficulty: "Easy", icon: "👅" },
   { id: 3, title: "Jelaskan Objek Random", level: "Basic", xp: 60, time: "2 min", difficulty: "Easy", icon: "🎲" },
   { id: 4, title: "Pitch Produk Imajiner", level: "Silver", xp: 120, time: "3 min", difficulty: "Medium", icon: "🚀" },
@@ -118,6 +118,42 @@ export const skillRadar = [
   { skill: "Engagement", value: 71 },
   { skill: "Structure", value: 88 },
   { skill: "Vocabulary", value: 74 },
+];
+
+export const quizBank = [
+  // Public speaking
+  { q: "Apa teknik pernapasan yang disarankan sebelum berbicara di depan umum?", options: ["Napas dada cepat", "Napas diafragma", "Menahan napas", "Napas pendek"], answer: 1 },
+  { q: "Berapa detik ideal untuk membuat hook/pembuka yang menarik?", options: ["3-5 detik", "30 detik", "2 menit", "60 detik"], answer: 0 },
+  { q: "Apa yang dimaksud dengan 'eye contact triangle'?", options: ["Melihat 3 titik audiens", "Menutup mata 3 kali", "Berdiri segitiga", "3 jenis tatapan marah"], answer: 0 },
+  { q: "Struktur pidato yang baik adalah...", options: ["Isi saja", "Pembuka - Isi - Penutup", "Penutup dulu", "Bebas tanpa struktur"], answer: 1 },
+  { q: "Apa itu 'filler words'?", options: ["Kata penting", "Kata pengisi seperti 'eee', 'um'", "Kata bahasa asing", "Istilah teknis"], answer: 1 },
+  { q: "Kecepatan bicara ideal untuk pidato adalah...", options: ["200+ kata/menit", "50 kata/menit", "120-150 kata/menit", "Secepat mungkin"], answer: 2 },
+  { q: "Apa fungsi 'pause' dalam public speaking?", options: ["Lupa materi", "Memberi penekanan & waktu audiens mencerna", "Membuang waktu", "Tanda gugup"], answer: 1 },
+  { q: "Gesture tangan saat berbicara sebaiknya...", options: ["Dimasukkan saku", "Natural dan mendukung pesan", "Berlebihan terus", "Diam kaku"], answer: 1 },
+  { q: "Apa itu 'impromptu speaking'?", options: ["Pidato terjadwal", "Bicara spontan tanpa persiapan", "Membaca naskah", "Pidato tertulis"], answer: 1 },
+  { q: "Cara mengatasi demam panggung yang efektif adalah...", options: ["Menghindar tampil", "Latihan & visualisasi positif", "Minum obat tidur", "Tidak latihan"], answer: 1 },
+  // Pengetahuan umum
+  { q: "Ibukota Indonesia adalah...", options: ["Bandung", "Jakarta", "Surabaya", "Medan"], answer: 1 },
+  { q: "Planet terdekat dari matahari adalah...", options: ["Venus", "Bumi", "Merkurius", "Mars"], answer: 2 },
+  { q: "HTML singkatan dari...", options: ["HyperText Markup Language", "High Text Machine Language", "Hyperlink Text Mode Language", "Home Tool Markup Language"], answer: 0 },
+  { q: "Benua terbesar di dunia adalah...", options: ["Afrika", "Eropa", "Asia", "Amerika"], answer: 2 },
+  { q: "Siapa penemu lampu pijar?", options: ["Newton", "Edison", "Einstein", "Tesla"], answer: 1 },
+  { q: "Bahasa pemrograman yang berjalan di browser adalah...", options: ["Python", "C++", "JavaScript", "Java"], answer: 2 },
+  { q: "1 GB sama dengan berapa MB?", options: ["100 MB", "512 MB", "1024 MB", "2048 MB"], answer: 2 },
+  { q: "Negara dengan populasi terbanyak di dunia (2024) adalah...", options: ["China", "Amerika", "Indonesia", "India"], answer: 3 },
+  { q: "Gunung tertinggi di dunia adalah...", options: ["K2", "Everest", "Kilimanjaro", "Fuji"], answer: 1 },
+  { q: "CSS digunakan untuk...", options: ["Database", "Styling tampilan web", "Server", "Sistem operasi"], answer: 1 },
+  // Hitungan cepat
+  { q: "15 + 27 = ?", options: ["32", "42", "52", "41"], answer: 1 },
+  { q: "8 × 7 = ?", options: ["54", "56", "48", "64"], answer: 1 },
+  { q: "100 - 37 = ?", options: ["63", "73", "67", "53"], answer: 0 },
+  { q: "144 ÷ 12 = ?", options: ["14", "11", "12", "16"], answer: 2 },
+  { q: "25% dari 80 = ?", options: ["15", "25", "20", "30"], answer: 2 },
+  { q: "9 × 9 = ?", options: ["72", "81", "99", "79"], answer: 1 },
+  { q: "50 + 75 - 25 = ?", options: ["100", "125", "90", "110"], answer: 0 },
+  { q: "3² + 4² = ?", options: ["25", "49", "12", "7"], answer: 0 },
+  { q: "200 ÷ 4 = ?", options: ["40", "60", "50", "45"], answer: 2 },
+  { q: "13 + 19 = ?", options: ["31", "33", "32", "30"], answer: 2 },
 ];
 
 export const weeklyXP = [
