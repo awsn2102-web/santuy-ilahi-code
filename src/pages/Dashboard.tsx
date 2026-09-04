@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { userStats, challenges, weeklyXP, badges } from "@/data/mockData";
+import { useAuth, XP_PER_LEVEL } from "@/context/AuthContext";
 import { Flame, Trophy, Target, Clock, Award, ArrowRight, Zap, TrendingUp } from "lucide-react";
 
 const Dashboard = () => {
-  const xpPct = (userStats.xp / userStats.xpToNext) * 100;
+  const { user } = useAuth();
+  const xp = user?.xp ?? 0;
+  const level = Math.floor(xp / XP_PER_LEVEL) + 1;
+  const xpInLevel = xp % XP_PER_LEVEL;
+  const xpToNext = level * XP_PER_LEVEL;
+  const tier = level >= 15 ? "Gold" : level >= 7 ? "Silver" : "Basic";
+  const completed = user?.challengesCompleted ?? 0;
+  const xpPct = (xpInLevel / XP_PER_LEVEL) * 100;
   const maxXp = Math.max(...weeklyXP.map((d) => d.xp));
   const recommended = challenges.slice(0, 3);
 
@@ -17,12 +25,12 @@ const Dashboard = () => {
           <div className="relative grid md:grid-cols-[1fr_auto] gap-6 items-center">
             <div className="text-primary-foreground">
               <p className="text-sm opacity-80 mb-1">Selamat datang kembali,</p>
-              <h1 className="font-display text-3xl md:text-5xl font-black mb-3">{userStats.name} 🎙️</h1>
-              <p className="opacity-90 mb-5 max-w-md">Tier <span className="font-bold">{userStats.tier}</span> · Level {userStats.level} · {userStats.xp.toLocaleString()} XP</p>
+              <h1 className="font-display text-3xl md:text-5xl font-black mb-3">{user?.name ?? userStats.name} 🎙️</h1>
+              <p className="opacity-90 mb-5 max-w-md">Tier <span className="font-bold">{tier}</span> · Level {level} · {xp.toLocaleString()} XP</p>
               <div className="max-w-md">
                 <div className="flex justify-between text-xs mb-1.5 opacity-90">
-                  <span>{userStats.xp} XP</span>
-                  <span>{userStats.xpToNext} XP → Lv {userStats.level + 1}</span>
+                  <span>{xp.toLocaleString()} XP</span>
+                  <span>{xpToNext.toLocaleString()} XP → Lv {level + 1}</span>
                 </div>
                 <div className="h-2.5 bg-primary-foreground/20 rounded-full overflow-hidden">
                   <div className="h-full bg-accent rounded-full transition-all" style={{ width: `${xpPct}%` }} />
@@ -42,7 +50,7 @@ const Dashboard = () => {
         {/* Stat tiles */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { icon: Target, label: "Challenges", value: `${userStats.challengesCompleted}/${userStats.totalChallenges}`, grad: "gradient-purple" },
+            { icon: Target, label: "Challenges", value: `${completed}/${userStats.totalChallenges}`, grad: "gradient-purple" },
             { icon: Trophy, label: "Rank Global", value: `#${userStats.rank}`, grad: "gradient-gold" },
             { icon: Award, label: "Badges Earned", value: userStats.badges, grad: "gradient-success" },
             { icon: Clock, label: "Hours Learned", value: `${userStats.hoursLearned}h`, grad: "gradient-bronze" },
