@@ -88,6 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=6366f1&color=fff&size=128`,
       xp: 0,
       level: 1,
+      challengesCompleted: 0,
       createdAt: new Date().toISOString(),
     };
 
