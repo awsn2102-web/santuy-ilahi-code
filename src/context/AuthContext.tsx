@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (entry.password !== btoa(password)) return { success: false, error: "Password salah." };
 
     // Sync data terbaru dari storage
-    const freshUser = entry.user;
+    const freshUser = normalize(entry.user);
     setUser(freshUser);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(freshUser));
     return { success: true };
