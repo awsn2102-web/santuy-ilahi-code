@@ -109,7 +109,7 @@ const MiniGame = () => {
               Random <span className="text-gradient">Quiz Rush</span>
             </h1>
             <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-              Jawab soal acak sebanyak-banyaknya dalam <strong>5 menit</strong>!
+              Jawab soal acak sebanyak-banyaknya dalam <strong>4 menit</strong>!
               Setiap jawaban benar = <strong>+{XP_PER_CORRECT} XP</strong>. Seberapa cepat kamu bisa?
             </p>
             <div className="grid grid-cols-3 gap-4 mb-8">
