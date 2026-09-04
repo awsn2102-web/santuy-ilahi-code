@@ -5,7 +5,7 @@ import { quizBank } from "@/data/mockData";
 import { useAuth } from "@/context/AuthContext";
 import { Timer, CheckCircle2, XCircle, Zap, Trophy, RotateCcw, ArrowLeft, Play } from "lucide-react";
 
-const DURATION = 5 * 60; // 5 menit
+const DURATION = 4 * 60; // 4 menit
 const XP_PER_CORRECT = 10;
 
 type Phase = "start" | "playing" | "result";
