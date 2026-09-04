@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { quizBank } from "@/data/mockData";
+import { useAuth } from "@/context/AuthContext";
 import { Timer, CheckCircle2, XCircle, Zap, Trophy, RotateCcw, ArrowLeft, Play } from "lucide-react";
 
 const DURATION = 5 * 60; // 5 menit
@@ -13,6 +14,7 @@ const shuffle = <T,>(arr: T[]): T[] =>
   [...arr].sort(() => Math.random() - 0.5);
 
 const MiniGame = () => {
+  const { addXP } = useAuth();
   const [phase, setPhase] = useState<Phase>("start");
   const [questions, setQuestions] = useState(() => shuffle(quizBank));
   const [index, setIndex] = useState(0);
@@ -50,6 +52,7 @@ const MiniGame = () => {
   useEffect(() => {
     if (phase === "result") {
       const earned = correct * XP_PER_CORRECT;
+      if (earned > 0) addXP(earned);
       if (earned > best) {
         setBest(earned);
         localStorage.setItem("quizRushBest", String(earned));

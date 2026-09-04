@@ -40,9 +40,17 @@ const saveUsers = (users: Record<string, { password: string; user: User }>) => {
   localStorage.setItem("speakup_users", JSON.stringify(users));
 };
 
+const normalize = (u: User): User => ({
+  ...u,
+  xp: u.xp ?? 0,
+  challengesCompleted: u.challengesCompleted ?? 0,
+  level: Math.floor((u.xp ?? 0) / XP_PER_LEVEL) + 1,
+});
+
 const getLoggedInUser = (): User | null => {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    return raw ? normalize(raw) : null;
   } catch {
     return null;
   }
@@ -67,7 +75,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (entry.password !== btoa(password)) return { success: false, error: "Password salah." };
 
     // Sync data terbaru dari storage
-    const freshUser = entry.user;
+    const freshUser = normalize(entry.user);
     setUser(freshUser);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(freshUser));
     return { success: true };
@@ -88,6 +96,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=6366f1&color=fff&size=128`,
       xp: 0,
       level: 1,
+      challengesCompleted: 0,
       createdAt: new Date().toISOString(),
     };
 
@@ -118,11 +127,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const addXP = (amount: number) => {
-    if (!user) return;
+  const addXP = (amount: number, options?: { countChallenge?: boolean }) => {
+    if (!user || amount <= 0) return;
     const newXP = user.xp + amount;
-    const newLevel = Math.floor(newXP / 500) + 1;
-    const updated = { ...user, xp: newXP, level: newLevel };
+    const updated: User = {
+      ...user,
+      xp: newXP,
+      level: Math.floor(newXP / XP_PER_LEVEL) + 1,
+      challengesCompleted:
+        (user.challengesCompleted ?? 0) + (options?.countChallenge === false ? 0 : 1),
+    };
     setUser(updated);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
 

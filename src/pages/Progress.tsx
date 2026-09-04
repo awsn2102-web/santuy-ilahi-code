@@ -1,8 +1,11 @@
 import { Layout } from "@/components/Layout";
 import { skillRadar, weeklyXP, userStats, badges } from "@/data/mockData";
+import { useAuth } from "@/context/AuthContext";
 import { TrendingUp, Award, Calendar, Flame } from "lucide-react";
 
 const Progress = () => {
+  const { user } = useAuth();
+  const xp = user?.xp ?? 0;
   // Build SVG hexagon radar
   const size = 280, cx = size / 2, cy = size / 2, r = 110;
   const n = skillRadar.length;
@@ -37,7 +40,7 @@ const Progress = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { icon: TrendingUp, label: "Total XP", value: userStats.xp.toLocaleString(), grad: "gradient-purple" },
+            { icon: TrendingUp, label: "Total XP", value: xp.toLocaleString(), grad: "gradient-purple" },
             { icon: Flame, label: "Day Streak", value: userStats.streak, grad: "gradient-gold" },
             { icon: Award, label: "Badges", value: userStats.badges, grad: "gradient-success" },
             { icon: Calendar, label: "Hours", value: `${userStats.hoursLearned}h`, grad: "gradient-bronze" },
