@@ -5,7 +5,7 @@ import { quizBank } from "@/data/mockData";
 import { useAuth } from "@/context/AuthContext";
 import { Timer, CheckCircle2, XCircle, Zap, Trophy, RotateCcw, ArrowLeft, Play } from "lucide-react";
 
-const DURATION = 5 * 60; // 5 menit
+const DURATION = 4 * 60; // 4 menit
 const XP_PER_CORRECT = 10;
 
 type Phase = "start" | "playing" | "result";
@@ -109,7 +109,7 @@ const MiniGame = () => {
               Random <span className="text-gradient">Quiz Rush</span>
             </h1>
             <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-              Jawab soal acak sebanyak-banyaknya dalam <strong>5 menit</strong>!
+              Jawab soal acak sebanyak-banyaknya dalam <strong>4 menit</strong>!
               Setiap jawaban benar = <strong>+{XP_PER_CORRECT} XP</strong>. Seberapa cepat kamu bisa?
             </p>
             <div className="grid grid-cols-3 gap-4 mb-8">
