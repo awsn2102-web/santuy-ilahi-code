@@ -118,11 +118,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const addXP = (amount: number) => {
-    if (!user) return;
+  const addXP = (amount: number, options?: { countChallenge?: boolean }) => {
+    if (!user || amount <= 0) return;
     const newXP = user.xp + amount;
-    const newLevel = Math.floor(newXP / 500) + 1;
-    const updated = { ...user, xp: newXP, level: newLevel };
+    const updated: User = {
+      ...user,
+      xp: newXP,
+      level: Math.floor(newXP / XP_PER_LEVEL) + 1,
+      challengesCompleted:
+        (user.challengesCompleted ?? 0) + (options?.countChallenge === false ? 0 : 1),
+    };
     setUser(updated);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
 
