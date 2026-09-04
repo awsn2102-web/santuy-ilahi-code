@@ -40,9 +40,17 @@ const saveUsers = (users: Record<string, { password: string; user: User }>) => {
   localStorage.setItem("speakup_users", JSON.stringify(users));
 };
 
+const normalize = (u: User): User => ({
+  ...u,
+  xp: u.xp ?? 0,
+  challengesCompleted: u.challengesCompleted ?? 0,
+  level: Math.floor((u.xp ?? 0) / XP_PER_LEVEL) + 1,
+});
+
 const getLoggedInUser = (): User | null => {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    return raw ? normalize(raw) : null;
   } catch {
     return null;
   }
