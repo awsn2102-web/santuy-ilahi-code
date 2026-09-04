@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Layout } from "@/components/Layout";
+import { useAuth } from "@/context/AuthContext";
 import { Mic, Type, Sparkles, Play, Square, Send, Loader2, CheckCircle2, AlertCircle, MessageSquare, Tag } from "lucide-react";
 
 type Mode = "text" | "voice";
@@ -34,6 +35,7 @@ const sampleFeedback = {
 };
 
 const Practice = () => {
+  const { addXP } = useAuth();
   const [mode, setMode] = useState<Mode>("text");
   const [text, setText] = useState("");
   const [recording, setRecording] = useState(false);
@@ -155,6 +157,7 @@ const Practice = () => {
     setTimeout(() => {
       setFeedback(sampleFeedback);
       setSubmitting(false);
+      addXP(sampleFeedback.xpEarned);
     }, 1800);
   };
 
