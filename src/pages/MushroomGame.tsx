@@ -267,12 +267,10 @@ const MushroomGame = () => {
                     left: `${(player.x / ARENA) * 100}%`,
                     top: `${(player.y / ARENA) * 100}%`,
                     width: `${(PLAYER_SIZE / ARENA) * 100}%`,
-                    fontSize: 32,
-                    lineHeight: 1,
                     filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
                   }}
                 >
-                  🍄
+                  <MushroomChar size={PLAYER_SIZE} />
                 </div>
               </>
             )}
