@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { useAuth } from "@/context/AuthContext";
@@ -203,7 +202,7 @@ const MushroomGame = () => {
         </Link>
 
         <div className="text-center mb-6 animate-fade-in-up">
-          <div className="text-6xl mb-3">🍄</div>
+          <div className="flex justify-center mb-3"><MushroomChar size={64} /></div>
           <h1 className="font-display text-3xl md:text-4xl font-black mb-2">
             Mushroom <span className="text-gradient">Challenge</span>
           </h1>
