@@ -25,6 +25,30 @@ const randomFood = (): { pos: Pos; emoji: string } => ({
 
 type Phase = "start" | "playing" | "result";
 
+// Karakter jamur dengan mata & mulut (SVG)
+const MushroomChar = ({ size = 32 }: { size?: number }) => (
+  <svg viewBox="0 0 64 64" width={size} height={size} style={{ display: "block" }}>
+    {/* Tudung jamur */}
+    <path d="M6 34 C6 14, 58 14, 58 34 C58 38, 54 40, 50 40 L14 40 C10 40, 6 38, 6 34 Z" fill="#e05252" />
+    {/* Bintik putih */}
+    <circle cx="20" cy="28" r="4" fill="#fff" opacity="0.9" />
+    <circle cx="40" cy="24" r="5" fill="#fff" opacity="0.9" />
+    <circle cx="50" cy="33" r="3" fill="#fff" opacity="0.9" />
+    {/* Batang */}
+    <rect x="22" y="38" width="20" height="20" rx="9" fill="#fdf3e3" />
+    {/* Mata */}
+    <circle cx="28" cy="47" r="2.6" fill="#2b2b2b" />
+    <circle cx="37" cy="47" r="2.6" fill="#2b2b2b" />
+    <circle cx="28.9" cy="46.1" r="0.9" fill="#fff" />
+    <circle cx="37.9" cy="46.1" r="0.9" fill="#fff" />
+    {/* Mulut senyum */}
+    <path d="M29 52 Q32.5 55, 36 52" stroke="#2b2b2b" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+    {/* Pipi */}
+    <circle cx="25" cy="51" r="1.6" fill="#f4a4a4" opacity="0.8" />
+    <circle cx="40" cy="51" r="1.6" fill="#f4a4a4" opacity="0.8" />
+  </svg>
+);
+
 const MushroomGame = () => {
   const { addXP } = useAuth();
   const [phase, setPhase] = useState<Phase>("start");
@@ -178,7 +202,7 @@ const MushroomGame = () => {
         </Link>
 
         <div className="text-center mb-6 animate-fade-in-up">
-          <div className="text-6xl mb-3">🍄</div>
+          <div className="flex justify-center mb-3"><MushroomChar size={64} /></div>
           <h1 className="font-display text-3xl md:text-4xl font-black mb-2">
             Mushroom <span className="text-gradient">Challenge</span>
           </h1>
@@ -243,12 +267,10 @@ const MushroomGame = () => {
                     left: `${(player.x / ARENA) * 100}%`,
                     top: `${(player.y / ARENA) * 100}%`,
                     width: `${(PLAYER_SIZE / ARENA) * 100}%`,
-                    fontSize: 32,
-                    lineHeight: 1,
                     filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
                   }}
                 >
-                  🍄
+                  <MushroomChar size={PLAYER_SIZE} />
                 </div>
               </>
             )}
