@@ -87,6 +87,7 @@ export const challenges = [
   { id: 7, title: "Impromptu Debate", level: "Gold", xp: 250, time: "5 min", difficulty: "Hard", icon: "⚖️" },
   { id: 8, title: "TED-Style Keynote", level: "Gold", xp: 300, time: "6 min", difficulty: "Hard", icon: "🎤" },
   { id: 9, title: "Crisis Press Conference", level: "Gold", xp: 280, time: "5 min", difficulty: "Hard", icon: "📰" },
+  { id: 10, title: "Mushroom Challenge", level: "Basic", xp: 5, time: "1 min", difficulty: "Easy", icon: "🍄", isMushroom: true },
 ];
 
 export const leaderboard = [
