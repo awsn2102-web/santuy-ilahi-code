@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { useAuth } from "@/context/AuthContext";
