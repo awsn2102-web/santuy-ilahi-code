@@ -25,6 +25,30 @@ const randomFood = (): { pos: Pos; emoji: string } => ({
 
 type Phase = "start" | "playing" | "result";
 
+// Karakter jamur dengan mata & mulut (SVG)
+const MushroomChar = ({ size = 32 }: { size?: number }) => (
+  <svg viewBox="0 0 64 64" width={size} height={size} style={{ display: "block" }}>
+    {/* Tudung jamur */}
+    <path d="M6 34 C6 14, 58 14, 58 34 C58 38, 54 40, 50 40 L14 40 C10 40, 6 38, 6 34 Z" fill="#e05252" />
+    {/* Bintik putih */}
+    <circle cx="20" cy="28" r="4" fill="#fff" opacity="0.9" />
+    <circle cx="40" cy="24" r="5" fill="#fff" opacity="0.9" />
+    <circle cx="50" cy="33" r="3" fill="#fff" opacity="0.9" />
+    {/* Batang */}
+    <rect x="22" y="38" width="20" height="20" rx="9" fill="#fdf3e3" />
+    {/* Mata */}
+    <circle cx="28" cy="47" r="2.6" fill="#2b2b2b" />
+    <circle cx="37" cy="47" r="2.6" fill="#2b2b2b" />
+    <circle cx="28.9" cy="46.1" r="0.9" fill="#fff" />
+    <circle cx="37.9" cy="46.1" r="0.9" fill="#fff" />
+    {/* Mulut senyum */}
+    <path d="M29 52 Q32.5 55, 36 52" stroke="#2b2b2b" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+    {/* Pipi */}
+    <circle cx="25" cy="51" r="1.6" fill="#f4a4a4" opacity="0.8" />
+    <circle cx="40" cy="51" r="1.6" fill="#f4a4a4" opacity="0.8" />
+  </svg>
+);
+
 const MushroomGame = () => {
   const { addXP } = useAuth();
   const [phase, setPhase] = useState<Phase>("start");
