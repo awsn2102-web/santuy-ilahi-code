@@ -17,6 +17,7 @@ import Practice from "./pages/Practice";
 import Progress from "./pages/Progress";
 import Leaderboard from "./pages/Leaderboard";
 import MiniGame from "./pages/MiniGame";
+import MushroomGame from "./pages/MushroomGame";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/progress"    element={<ProtectedRoute><Progress /></ProtectedRoute>} />
             <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
             <Route path="/mini-game"   element={<ProtectedRoute><MiniGame /></ProtectedRoute>} />
+            <Route path="/mushroom-game" element={<ProtectedRoute><MushroomGame /></ProtectedRoute>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
